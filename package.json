@@ -4,7 +4,8 @@
   "description": "REST API con Express y Typescript",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon --exec ts-node src/index.ts"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/JPalacio3/rest_api_node_ts_server/issues"
   },
-  "homepage": "https://github.com/JPalacio3/rest_api_node_ts_server#readme"
+  "homepage": "https://github.com/JPalacio3/rest_api_node_ts_server#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
 }
