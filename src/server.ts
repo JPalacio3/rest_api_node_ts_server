@@ -1,22 +1,9 @@
 import express from "express";
+import router from "./router";
 
 const server = express();
 
-// Router
-server.get("/", (req, res) => {
-  res.json("Desde GET");
-});
-
-server.post("/", (req, res) => {
-  res.send("Desde POST");
-});
-
-server.put("/", (res, req) => {
-  res.send("Desde PUT");
-});
-
-server.delete("/", (req, res) => {
-  res.send("Desde DELETE");
-});
+// Importación del router para obtener las peticiones de la API
+server.use("/api/products", router);
 
 export default server;
