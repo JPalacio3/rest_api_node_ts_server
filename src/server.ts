@@ -4,16 +4,19 @@ const server = express();
 
 // Router
 server.get("/", (req, res) => {
-  "Desde GET";
+  res.json("Desde GET");
 });
+
 server.post("/", (req, res) => {
-  "Desde POST";
+  res.send("Desde POST");
 });
-server.put("/", (req, res) => {
-  "Desde PUT";
+
+server.put("/", (res, req) => {
+  res.send("Desde PUT");
 });
+
 server.delete("/", (req, res) => {
-  "Desde DELETE";
+  res.send("Desde DELETE");
 });
 
 export default server;
