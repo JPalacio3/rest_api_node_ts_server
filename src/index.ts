@@ -1,4 +1,5 @@
-import { sumar } from "./server";
+import server from "./server";
 
-console.log("Server corriendo...");
-console.log(sumar());
+server.listen(4000, () => {
+  console.log("Server is running on port 4000");
+});

@@ -18,8 +18,12 @@
   },
   "homepage": "https://github.com/JPalacio3/rest_api_node_ts_server#readme",
   "devDependencies": {
+    "@types/express": "github:types/express",
     "nodemon": "^3.1.10",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
   }
 }
