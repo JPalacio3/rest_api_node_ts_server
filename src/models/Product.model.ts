@@ -9,17 +9,17 @@ class Products extends Model {
   @Column({
     type: DataType.STRING(100),
   })
-  name: string;
+  name!: string;
 
   @Column({
     type: DataType.FLOAT(6, 2),
   })
-  price: number;
+  price!: number;
 
   @Column({
     type: DataType.BOOLEAN,
   })
-  avalability: boolean;
+  avalability!: boolean;
 }
 
 export default Products;
