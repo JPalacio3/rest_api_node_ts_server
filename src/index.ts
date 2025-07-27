@@ -1,5 +1,10 @@
 import server from "./server";
+import colors from "colors";
 
-server.listen(4000, () => {
-  console.log("Server is running on port 4000");
+const port = process.env.port || 5434;
+
+server.listen(port, () => {
+  console.log(
+    colors.bold.bgMagenta.white(`Servidor corriendo en el puerto ${port}`)
+  );
 });
