@@ -1,12 +1,18 @@
 import { Router } from "express";
-import { createProduct, getProducts } from "./handlers/product";
-import { body } from "express-validator";
+import { createProduct, getProducts, getProductById } from "./handlers/product";
+import { body, param } from "express-validator";
 import { handleInputErrors } from "./middleware";
 
 const router = Router();
 
 // Router
 router.get("/", getProducts);
+router.get(
+  "/:id",
+  param("id").isUUID().withMessage("ID no válido"),
+  handleInputErrors,
+  getProductById
+);
 
 router.post(
   "/",
@@ -28,11 +34,11 @@ router.post(
   createProduct
 );
 
-router.put("/", (req, res) => {
+router.put("/", (_req, res) => {
   res.send("Desde PUT");
 });
 
-router.delete("/", (req, res) => {
+router.delete("/", (_req, res) => {
   res.send("Desde DELETE");
 });
 

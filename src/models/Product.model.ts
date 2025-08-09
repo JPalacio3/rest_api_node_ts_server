@@ -1,4 +1,11 @@
-import { Table, Column, Model, DataType, Default } from "sequelize-typescript";
+import {
+  Table,
+  Column,
+  Model,
+  DataType,
+  Default,
+  PrimaryKey,
+} from "sequelize-typescript";
 
 @Table({
   tableName: "products",
@@ -6,6 +13,13 @@ import { Table, Column, Model, DataType, Default } from "sequelize-typescript";
 
 // Define el modelo de producto
 class Products extends Model {
+  @PrimaryKey
+  @Column({
+    type: DataType.UUID,
+    defaultValue: DataType.UUIDV4,
+  })
+  declare id: string;
+
   @Column({
     type: DataType.STRING(100),
   })
@@ -20,7 +34,7 @@ class Products extends Model {
   @Column({
     type: DataType.BOOLEAN,
   })
-  avalability!: boolean;
+  availability!: boolean;
 }
 
 export default Products;

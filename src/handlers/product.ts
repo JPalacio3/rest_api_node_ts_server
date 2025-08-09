@@ -6,8 +6,27 @@ export const getProducts = async (req: Request, res: Response) => {
   try {
     const products = await Products.findAll({
       order: [["createdAt", "DESC"]], // Ordenar por fecha de creación descendente
+      attributes: { exclude: ["createdAt", "updatedAt"] }, // Excluir campos innecesarios
     });
     res.json({ data: products });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al obtener los productos" });
+  }
+};
+
+// Handler para obtener un solo producto por ID
+export const getProductById = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const product = await Products.findByPk(id);
+
+    // Validar si no existe el producto
+    if (!product) {
+      return res.status(404).json({ error: "Producto no encontrado" });
+    }
+
+    res.json({ data: product });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Error al obtener los productos" });
@@ -23,6 +42,6 @@ export const createProduct = async (req: Request, res: Response) => {
     res.json({ data: product });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Error al crear el producto" });
+    res.status(500).json({ error: `"Error al crear el producto" : ${error} ` });
   }
 };
