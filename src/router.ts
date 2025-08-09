@@ -1,5 +1,7 @@
 import { Router } from "express";
 import { createProduct } from "./handlers/product";
+import { body } from "express-validator";
+import { handleInputErrors } from "./middleware";
 
 const router = Router();
 
@@ -8,7 +10,25 @@ router.get("/", (req, res) => {
   res.json("Desde GET");
 });
 
-router.post("/", createProduct);
+router.post(
+  "/",
+  // Validar los datos del formulario
+  body("name").notEmpty().withMessage(" El nombre del producto es obligatorio"),
+
+  body("price")
+    .notEmpty()
+    .withMessage(" El precio del producto es obligatorio")
+    .isNumeric()
+    .withMessage("Valor no válido")
+    .custom((value) => value > 1)
+    .withMessage("Precio NO válido"),
+
+  // Middleware para manejar los errores de entrada
+  handleInputErrors,
+
+  // Handler para crear el producto
+  createProduct
+);
 
 router.put("/", (req, res) => {
   res.send("Desde PUT");
