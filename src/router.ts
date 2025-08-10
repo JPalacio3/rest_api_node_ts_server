@@ -1,5 +1,10 @@
 import { Router } from "express";
-import { createProduct, getProducts, getProductById } from "./handlers/product";
+import {
+  createProduct,
+  getProducts,
+  getProductById,
+  updateProduct,
+} from "./handlers/product";
 import { body, param } from "express-validator";
 import { handleInputErrors } from "./middleware";
 
@@ -34,9 +39,27 @@ router.post(
   createProduct
 );
 
-router.put("/", (_req, res) => {
-  res.send("Desde PUT");
-});
+router.put(
+  "/:id",
+  // Validar los datos del formulario
+  body("name").notEmpty().withMessage(" El nombre del producto es obligatorio"),
+
+  body("price")
+    .notEmpty()
+    .withMessage(" El precio del producto es obligatorio")
+    .isNumeric()
+    .withMessage("Valor no válido")
+    .custom((value) => value > 1)
+    .withMessage("Precio NO válido"),
+  body("availability")
+    .optional()
+    .isBoolean()
+    .withMessage("Valor para disponibilidad no válido"),
+
+  // Middleware para manejar los errores de entrada
+  handleInputErrors,
+  updateProduct
+);
 
 router.delete("/", (_req, res) => {
   res.send("Desde DELETE");

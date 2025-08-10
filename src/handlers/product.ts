@@ -1,6 +1,19 @@
 import { Request, Response } from "express";
 import Products from "../models/Product.model";
 
+// Handler para guardar los productos en la base de datos
+export const createProduct = async (req: Request, res: Response) => {
+  try {
+    // Enviar el producto a la base de datos
+    const product = await Products.create(req.body);
+    // Retornar el producto creado
+    res.json({ data: product });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: `"Error al crear el producto" : ${error} ` });
+  }
+};
+
 // Handler para obtener todos los productos
 export const getProducts = async (req: Request, res: Response) => {
   try {
@@ -33,15 +46,24 @@ export const getProductById = async (req: Request, res: Response) => {
   }
 };
 
-// Handler para guardar los productos en la base de datos
-export const createProduct = async (req: Request, res: Response) => {
+// Handler para actualizar el producto
+export const updateProduct = async (req: Request, res: Response) => {
   try {
-    // Enviar el producto a la base de datos
-    const product = await Products.create(req.body);
-    // Retornar el producto creado
+    const { id } = req.params;
+    const product = await Products.findByPk(id);
+
+    // Validar si no existe el producto
+    if (!product) {
+      return res.status(404).json({ error: "Producto NO encontrado" });
+    }
+
+    // Actualizar el producto con los nuevos datos
+    await product.update(req.body);
+    await product.save();
+
     res.json({ data: product });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: `"Error al crear el producto" : ${error} ` });
+    res.status(500).json({ error: "Error al actualizar el producto" });
   }
 };
