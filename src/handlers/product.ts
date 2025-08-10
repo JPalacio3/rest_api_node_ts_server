@@ -46,7 +46,7 @@ export const getProductById = async (req: Request, res: Response) => {
   }
 };
 
-// Handler para actualizar el producto
+// Handler para actualizar el producto - PUT
 export const updateProduct = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -66,4 +66,20 @@ export const updateProduct = async (req: Request, res: Response) => {
     console.error(error);
     res.status(500).json({ error: "Error al actualizar el producto" });
   }
+};
+
+// Handler para actualizar la disponibilidad del producto - PATCH
+export const updateAvailability = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const product = await Products.findByPk(id);
+
+  // Validar si no existe el producto
+  if (!product) {
+    return res.status(404).json({ error: "Producto NO encontrado" });
+  }
+  // Actualizar la disponibilidad del producto
+  product.availability = !product.availability;
+  await product.save();
+
+  res.json({ data: product });
 };

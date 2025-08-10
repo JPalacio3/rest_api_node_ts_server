@@ -4,6 +4,7 @@ import {
   getProducts,
   getProductById,
   updateProduct,
+  updateAvailability,
 } from "./handlers/product";
 import { body, param } from "express-validator";
 import { handleInputErrors } from "./middleware";
@@ -12,6 +13,8 @@ const router = Router();
 
 // Router
 router.get("/", getProducts);
+
+// Ruta para obtener un producto por ID
 router.get(
   "/:id",
   param("id").isUUID().withMessage("ID no válido"),
@@ -19,6 +22,7 @@ router.get(
   getProductById
 );
 
+// Ruta para crear un producto
 router.post(
   "/",
   // Validar los datos del formulario
@@ -39,6 +43,7 @@ router.post(
   createProduct
 );
 
+// Ruta para actualizar el producto
 router.put(
   "/:id",
   // Validar los datos del formulario
@@ -60,6 +65,9 @@ router.put(
   handleInputErrors,
   updateProduct
 );
+
+// Ruta para actualizar la disponibilidad del producto
+router.patch("/:id", updateAvailability);
 
 router.delete("/", (_req, res) => {
   res.send("Desde DELETE");
