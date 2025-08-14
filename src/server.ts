@@ -9,7 +9,7 @@ async function connectDB() {
     await db.authenticate();
     await db.sync({ alter: true });
 
-    console.log(colors.bold.bgGreen.white("Conexión a la base de datos"));
+    // console.log(colors.bold.bgGreen.white("Conexión a la base de datos"));
   } catch (error: any) {
     console.error(
       colors.bold.white.bgRed("Hubo un error al conectar a la base de datos")
@@ -28,5 +28,10 @@ server.use(express.json());
 
 // Importación del router para obtener las peticiones de la API
 server.use("/api/products", router);
+
+// Ruta para la validación de la API
+server.get("/api", (req, res) => {
+  res.json({ msg: "Desde la API" });
+});
 
 export default server;
