@@ -18,5 +18,9 @@ describe("GET /api", () => {
     expect(res.statusCode).toBe(200);
     expect(res.headers["content-type"]).toMatch(/json/);
     expect(res.body.msg).toBe("Desde la API");
+
+    expect(res.statusCode).not.toBe(404);
+    expect(res.headers["content-type"]).not.toMatch(/text/);
+    expect(res.body.msg).not.toBe("Prueba de conexión");
   });
 });
