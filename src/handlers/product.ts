@@ -83,3 +83,25 @@ export const updateAvailability = async (req: Request, res: Response) => {
 
   res.json({ data: product });
 };
+
+// Handler para eliminar un producto - DELETE
+export const deleteProduct = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const product = await Products.findByPk(id);
+
+    // Validar si no existe el producto
+    if (!product) {
+      return res.status(404).json({ error: "Producto NO encontrado" });
+    }
+
+    // Eliminar el producto de la base de datos
+    await product.destroy();
+    res.json({
+      data: `${product.name} Eliminado Correctamente`,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al eliminar el producto" });
+  }
+};

@@ -5,6 +5,7 @@ import {
   getProductById,
   updateProduct,
   updateAvailability,
+  deleteProduct,
 } from "./handlers/product";
 import { body, param } from "express-validator";
 import { handleInputErrors } from "./middleware";
@@ -46,6 +47,8 @@ router.post(
 // Ruta para actualizar el producto
 router.put(
   "/:id",
+  param("id").isUUID().withMessage("ID no válido"),
+
   // Validar los datos del formulario
   body("name").notEmpty().withMessage(" El nombre del producto es obligatorio"),
 
@@ -67,10 +70,19 @@ router.put(
 );
 
 // Ruta para actualizar la disponibilidad del producto
-router.patch("/:id", updateAvailability);
+router.patch(
+  "/:id",
+  param("id").isUUID().withMessage("ID no válido"),
+  handleInputErrors,
+  updateAvailability
+);
 
-router.delete("/", (_req, res) => {
-  res.send("Desde DELETE");
-});
+// Ruta para eliminar un producto
+router.delete(
+  "/:id",
+  param("id").isUUID().withMessage("ID no válido"),
+  handleInputErrors,
+  deleteProduct
+);
 
 export default router;
