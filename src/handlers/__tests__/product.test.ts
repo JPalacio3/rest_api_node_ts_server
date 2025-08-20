@@ -61,3 +61,11 @@ describe("POST /api/products", () => {
     expect(response.body.errors).not.toHaveLength(0);
   });
 });
+
+describe("GET /api/products", () => {
+  // Prueba para obtener todos los productos
+  it("GET a JSON response with products", async () => {
+    const response = await request(server).get("/api/products");
+    expect(response.status).toBe(200);
+  });
+});
