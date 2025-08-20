@@ -7,7 +7,7 @@ export const createProduct = async (req: Request, res: Response) => {
     // Enviar el producto a la base de datos
     const product = await Products.create(req.body);
     // Retornar el producto creado
-    res.json({ data: product });
+    res.status(201).json({ data: product });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: `"Error al crear el producto" : ${error} ` });

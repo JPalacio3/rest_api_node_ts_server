@@ -11,10 +11,10 @@ async function connectDB() {
 
     // console.log(colors.bold.bgGreen.white("Conexión a la base de datos"));
   } catch (error: any) {
-    console.error(
+    console.log(
       colors.bold.white.bgRed("Hubo un error al conectar a la base de datos")
     );
-    console.error(colors.red(error));
+    console.log(colors.red(error));
   }
 }
 
